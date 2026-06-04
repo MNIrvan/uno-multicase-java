@@ -1,0 +1,39 @@
+package com.game.client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class ClientApp {
+    private static final String SERVER_ADDRESS = "127.0.0.1";
+    private static final int SERVER_PORT = 8080;
+
+    public static void main(String[] args) {
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             Scanner scanner = new Scanner(System.in)) {
+
+            System.out.println("Connected to the server. Type LOGIN|yourname to join.");
+
+            // Start a thread to listen for server messages
+            ServerListener listener = new ServerListener(in);
+            new Thread(listener).start();
+
+            // Read user input and send to server
+            while (true) {
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("quit")) {
+                    break;
+                }
+                out.println(input);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Failed to connect to server: " + e.getMessage());
+        }
+    }
+}
