@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientGUI extends JFrame {
-    private static final String SERVER_ADDRESS = "127.0.0.1";
     private static final int SERVER_PORT = 8080;
 
     private Socket socket;
@@ -18,6 +17,7 @@ public class ClientGUI extends JFrame {
     private JPanel mainPanel;
 
     // Login Panel Components
+    private JTextField ipAddressField;
     private JTextField usernameField;
     private JButton connectButton;
 
@@ -58,10 +58,23 @@ public class ClientGUI extends JFrame {
 
         JLabel titleLabel = new JLabel("Welcome to UNO");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; gbc.insets = new Insets(10, 10, 20, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(10, 10, 20, 10);
         loginPanel.add(titleLabel, gbc);
 
-        gbc.gridwidth = 1; gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        loginPanel.add(new JLabel("Server IP: "), gbc);
+
+        ipAddressField = new JTextField("127.0.0.1", 15);
+        gbc.gridx = 1;
+        loginPanel.add(ipAddressField, gbc);
+
+        gbc.gridy = 2;
+        gbc.gridx = 0;
         loginPanel.add(new JLabel("Username: "), gbc);
 
         usernameField = new JTextField(15);
@@ -70,7 +83,10 @@ public class ClientGUI extends JFrame {
 
         connectButton = new JButton("Connect");
         connectButton.addActionListener(e -> connectToServer());
-        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; gbc.insets = new Insets(20, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(20, 10, 10, 10);
         loginPanel.add(connectButton, gbc);
 
         mainPanel.add(loginPanel, "LOGIN");
@@ -132,7 +148,7 @@ public class ClientGUI extends JFrame {
         drawButton.addActionListener(e -> {
             out.println("ACTION|DRAW_CARD");
         });
-        
+
         callUnoButton = new JButton("Call UNO!");
         callUnoButton.addActionListener(e -> {
             out.println("ACTION|CALL_UNO");
@@ -140,7 +156,7 @@ public class ClientGUI extends JFrame {
             callUnoButton.setEnabled(false);
             log("You called UNO!");
         });
-        
+
         actionPanel.add(drawButton);
         actionPanel.add(callUnoButton);
         bottomPanel.add(actionPanel, BorderLayout.EAST);
@@ -156,8 +172,14 @@ public class ClientGUI extends JFrame {
             return;
         }
 
+        String ipAddress = ipAddressField.getText().trim();
+        if (ipAddress.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Server IP cannot be empty");
+            return;
+        }
+
         try {
-            socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+            socket = new Socket(ipAddress, SERVER_PORT);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -198,7 +220,9 @@ public class ClientGUI extends JFrame {
                     turnLabel.setText("Turn: " + parts[2]);
                     boolean isMyTurn = parts[2].equals(username);
                     drawButton.setEnabled(isMyTurn);
-                    if (isMyTurn) hasCalledUno = false; // Reset call uno for new turn if needed, though usually you call it when playing 2nd to last card
+                    if (isMyTurn)
+                        hasCalledUno = false; // Reset call uno for new turn if needed, though usually you call it when
+                                              // playing 2nd to last card
                 } else if (parts.length > 2) {
                     log(parts[1] + ": " + parts[2]);
                 }

@@ -16,20 +16,21 @@ Dokumen ini berisi langkah-langkah untuk menyiapkan, menjalankan, dan bermain ga
    Database connected successfully.
    Server started on port 8080. Waiting for players...
    ```
-
 ## 3. Menjalankan Klien (Pemain)
 1. Buka file `src/main/java/com/game/client/ClientGUI.java`.
 2. Jalankan file tersebut. Sebuah jendela aplikasi berbasis Java Swing akan muncul.
-3. Masukkan `Username` Anda dan klik **Connect**.
-4. Anda akan masuk ke halaman **Lobby**. Daftar pemain yang sudah connect akan muncul di sini.
-5. Klik tombol **Ready**. 
-6. Game akan otomatis dimulai setelah ada minimal 2 pemain yang terhubung dan menekan **Ready**.
-7. Ulangi langkah 1-5 untuk pemain lainnya (maksimal 4 pemain).
+3. Masukkan **Server IP** (Gunakan `127.0.0.1` jika server ada di komputer/laptop yang sama. Jika Anda ingin menyambungkan dari *device* lain, isi dengan IP Address LAN dari komputer yang menjalankan server, contoh: `192.168.x.x`).
+4. Masukkan `Username` Anda dan klik **Connect**.
+5. Anda akan masuk ke halaman **Lobby**. Daftar pemain yang sudah connect akan muncul di sini.
+6. Klik tombol **Ready**. 
+7. Game akan otomatis dimulai setelah ada minimal 2 pemain yang terhubung dan menekan **Ready**
+8. Ulangi langkah untuk pemain lainnya (maksimal 4 pemain).
 
 ## 4. Cara Bermain (In-Game)
-- **Top Card**: Menunjukkan kartu yang ada di tengah meja saat ini.
-- **Kartu di Tangan**: Akan muncul sebagai tombol-tombol di bagian bawah layar.
-- **Mendapat Giliran**: Jika tulisan *Turn* menunjukkan nama Anda, Anda dapat mengklik salah satu kartu di tangan yang warnanya atau angkanya cocok dengan *Top Card*.
-- **Draw Card**: Jika Anda tidak punya kartu yang cocok, tekan tombol **Draw Card** untuk mengambil 1 kartu baru dari tumpukan, lalu giliran akan berpindah ke pemain berikutnya.
-- **Aturan Call UNO (1 Kartu)**: Jika kartu Anda tersisa 2, dan Anda akan mengeluarkan kartu sehingga sisa 1, **JANGAN LUPA** tekan tombol **Call UNO!** terlebih dahulu. Jika tidak, saat kartu sisa 1 Anda otomatis akan dihukum menarik 2 kartu tambahan.
-- Game berakhir saat salah satu pemain menghabiskan seluruh kartunya. Hasil akan tersimpan di database MySQL otomatis.
+1. **Top Card**: Menunjukkan kartu yang ada di tengah meja saat ini.
+2. **Kartu di Tangan**: Akan muncul sebagai tombol-tombol di bagian bawah layar.
+3. **Mendapat Giliran**: Jika tulisan *Turn* menunjukkan nama Anda, Anda dapat mengklik salah satu kartu di tangan yang warnanya atau angkanya cocok dengan *Top Card*.
+4. **Draw Card**: Jika Anda tidak punya kartu yang cocok, tekan tombol **Draw Card** untuk mengambil 1 kartu baru dari tumpukan, lalu giliran akan berpindah ke pemain berikutnya.
+5. **Aturan Call UNO (1 Kartu)**: Jika kartu Anda tersisa 2, dan Anda akan mengeluarkan kartu sehingga sisa 1, **JANGAN LUPA** tekan tombol **Call UNO!** terlebih dahulu. Jika tidak, saat kartu sisa 1 Anda otomatis akan dihukum menarik 2 kartu tambahan.
+6. **Game Berakhir**: Game berakhir saat salah satu pemain menghabiskan seluruh kartunya. Hasil akan tersimpan di database MySQL otomatis.
+

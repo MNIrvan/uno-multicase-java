@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class DBConnection {
     // Koneksi dasar ke MySQL (tanpa nama database spesifik terlebih dahulu)
     private static final String BASE_URL = "jdbc:mysql://localhost:3306/";
-    private static final String DB_NAME = "db_game_tournament";
+    private static final String DB_NAME = "db_uno";
     private static final String URL = BASE_URL + DB_NAME;
     
     private static final String USER = "root";
